@@ -1,5 +1,5 @@
-var fs = require('fs');
-   http = require('http');
+var fs = require('fs'),
+   http = require('http'),
    util = require('util'),
    exec = require('child_process').exec;
 
