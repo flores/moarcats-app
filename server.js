@@ -4,7 +4,7 @@ var fs = require('fs'),
    exec = require('child_process').exec;
 
 
-exec('find images').stdout.on('data', function (files) {
+exec('find images -type f').stdout.on('data', function (files) {
   var cats = files.split("\n");
   http.createServer(function(req, res){
     var cat = cats[Math.floor(Math.random()*cats.length)];  
