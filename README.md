@@ -10,17 +10,19 @@ Use it anywhere you need a cat gif.  For example:
 
 or
 
-```<div id="catcontainer" onclick="moarcats();">
-  <img src="http://lo.no.de" alt="random cat"/>
-</div>
+```
+  <div id="catcontainer" onclick="moarcats();">
+    <img src="http://lo.no.de" alt="random cat"/>
+  </div>
 
-<script type="text/javascript">
-  function moarcats() {
-    var catcontainer = document.getElementById("catcontainer");
-    cat.innerHTML = '<img src="http://lo.no.de" alt="random cat"/>';
-    return false;
-  }
-</script>```
+  <script type="text/javascript">
+    function moarcats() {
+      var catcontainer = document.getElementById("catcontainer");
+      cat.innerHTML = '<img src="http://lo.no.de" alt="random cat"/>';
+      return false;
+    }
+  </script>
+```
 
 Also allows cross origin requests, nerd.
 
