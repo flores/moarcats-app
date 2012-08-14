@@ -18,7 +18,7 @@ or something like this to click for new cat gifs
   <script type="text/javascript">
     function moarcats() {
       var catcontainer = document.getElementById("catcontainer");
-      cat.innerHTML = '<img src="http://lo.no.de" alt="random cat"/>';
+      catcontainer.innerHTML = '<img src="http://lo.no.de" alt="random cat"/>';
       return false;
     }
   </script>
