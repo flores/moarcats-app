@@ -26,6 +26,13 @@ or something like this to click for new cat gifs
 
 Also allows cross origin requests.
 
+# omg /netcat
+
+try [netcat](http://edgecats.net/netcat) out!
+
+drag him around!
+type `moar cats` for an adorable cat!
+
 # need a random link generator or a specific cat?
 
 try [this](http://edgecats.net/random)
