@@ -1,12 +1,17 @@
 {
   "name": "moarcats",
-  "description": "every response is a cat gif.  inspired by placekitten",
+  "description": "cat gifs everywhere.  inspired by placekitten",
   "author": "flores <github@petalphile.com>",
-  "version": "0.0.1",
+  "contributors":[
+    "Tianhe Yang <tianhe.yang@gmail.com>",
+    "Ben Lovett <ben@tilderoot.com>"
+  ]
+  "version": "0.0.2",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
+    "express": "latest",
+    "ejs": "latest"
   }
 }
-

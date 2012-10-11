@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>edgecats!</title>
+  </head>
+
+  <body>
+    <div id="catcontainer" onclick="clickcats();">
+      <img src="http://edgecats.net" alt="random cat"/>
+    </div>
+
+    <script type="text/javascript">
+      function clickcats() {
+        var catcontainer = document.getElementById("catcontainer");
+        catcontainer.innerHTML = '<img src="http://edgecats.net" alt="random cat"/>';
+        return false;
+      }
+      setInterval(function timercat() {
+        var catcontainer = document.getElementById("catcontainer");
+        catcontainer.innerHTML = '<img src="http://edgecats.net" alt="random cat"/>';
+        return false;
+      }, 60000);
+    </script>
+  </body>
+</html>
