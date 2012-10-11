@@ -2,6 +2,10 @@
   "name": "moarcats",
   "description": "cat gifs everywhere.  inspired by placekitten",
   "author": "flores <github@petalphile.com>",
+  "contributors":[
+    "Tianhe Yang <tianhe.yang@gmail.com>",
+    "Ben Lovett <ben@tilderoot.com>"
+  ]
   "version": "0.0.2",
   "scripts": {
     "start": "node server.js"
