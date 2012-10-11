@@ -26,16 +26,23 @@ or something like this to click for new cat gifs
 
 Also allows cross origin requests.
 
-# omg /netcat
+# automagicly get moar cats!
 
-try [netcat](http://edgecats.net/netcat) out!
+try [/auto](http://edgecats.net/auto)!  
+
+every 60s is a new cat
+click the image to immediately get moar cats
+
+# omg /netcat!!
+
+try [/netcat](http://edgecats.net/netcat) out!
 
 drag him around!
 type `moar cats` for an adorable cat!
 
 # need a random link generator or a specific cat?
 
-try [this](http://edgecats.net/random)
+try [/random](http://edgecats.net/random)
 
 edgecats.net/cats/<whatever> is a static cacheable image.
 

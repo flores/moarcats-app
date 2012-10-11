@@ -17,6 +17,10 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.render('netcat.html');
   });
   
+  app.get('/auto', function(req, res){
+    res.render('auto.html');
+  });
+  
   app.get('/netcat/:image', function(req, res){
     fs.readFile('views/' + req.params.image, function ( err, img ) {
       res.writeHead(200, {'Content-Type':'image/png'});
