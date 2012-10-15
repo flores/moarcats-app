@@ -22,7 +22,7 @@
 				filter: alpha(opacity=0);
 				opacity: 0;
 				position: relative;
-				z-index: 1;
+				z-index: 5;
 				width: 100%;
 				height: 100%;
 				line-height: 0;
@@ -39,7 +39,7 @@
 				z-index: 99;
 			}
 			.netcat .catshell {
-				z-index: 1;
+				z-index: 5;
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -71,10 +71,10 @@
 				z-index: 10;
 			}
 			.helpbar {
-				position: fixed;
+				position: absolute;
 				z-index: 1;
-				width: 100%;
-				padding: 0px 10px;
+				width: 50%;
+				padding: 4px 10px;
 				left: 0;
 				bottom: 0;
 			}
@@ -111,6 +111,7 @@
 				var winwidth = $(window).width();
 				var winheight = $(window).height();
 				var winAspectRatio = winwidth/winheight;
+				var autoCatInterval;
 				
 				function moarcats(scale) {
 					var timestamp = new Date().getTime();
@@ -164,9 +165,9 @@
 								var val = toParse.match(/\d+/)[0];
 								var t = Number(val);
 								if (enteredText.indexOf("-noscale") >= 0) {
-									$('.netcat').fadeOut(200, function(){setInterval(function(){moarcats(0)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+									$('.netcat').fadeOut(200, function(){autoCatInterval = window.setInterval(function(){moarcats(0)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
 								} else {
-									$('.netcat').fadeOut(200, function(){setInterval(function(){moarcats(1)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+									$('.netcat').fadeOut(200, function(){autoCatInterval = window.setInterval(function(){moarcats(1)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
 								}
 							}
 						}
@@ -176,6 +177,7 @@
 				$(document).keydown(function(e) {
 					if(e.which == 81){
 						$('#catcontainer').fadeTo(200, 0, function(){$('.netcat').fadeIn(200)});
+						window.clearInterval(autoCatInterval);
 					}
 				});
 				var catrun;
