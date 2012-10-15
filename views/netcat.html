@@ -22,7 +22,7 @@
 				filter: alpha(opacity=0);
 				opacity: 0;
 				position: relative;
-				z-index: 1;
+				z-index: 5;
 				width: 100%;
 				height: 100%;
 				line-height: 0;
@@ -39,7 +39,7 @@
 				z-index: 99;
 			}
 			.netcat .catshell {
-				z-index: 1;
+				z-index: 5;
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -70,6 +70,17 @@
 				left: 170px;
 				z-index: 10;
 			}
+			.helpbar {
+				position: absolute;
+				z-index: 1;
+				width: 50%;
+				padding: 4px 10px;
+				left: 0;
+				bottom: 0;
+			}
+			em {
+				font-weight: 800;
+			}
 		</style>
 		
 	</head>
@@ -89,6 +100,10 @@
 			</div>
 			<textarea class="catterm"></textarea>
 		</div>
+		
+		<div class="helpbar">
+			<em>moar cats [OPTION]</em> -auto=SECONDS -noscale
+		</div>
 
 		<script type="text/javascript">
 			
@@ -96,14 +111,17 @@
 				var winwidth = $(window).width();
 				var winheight = $(window).height();
 				var winAspectRatio = winwidth/winheight;
+				var autoCatInterval;
 				
-				function moarcats() {
+				function moarcats(scale) {
 					var timestamp = new Date().getTime();
 					var catcontainer = $("#catcontainer");
 					catcontainer.html('<img src="http://edgecats.net?time='+timestamp+'" alt="random cat"/>');
-					$('#catcontainer img').load(function(){
-						$(this).catResize();
-					});
+					if(scale) {
+						$('#catcontainer img').load(function(){
+							$(this).catResize();
+						});
+					}
 					return false;
 				}
 					
@@ -137,8 +155,21 @@
 					if(e.which == 13) {
 						var enteredText = term.val();
 						term.val('');
-						if(enteredText == 'moar cats') {
-							$('.netcat').fadeOut(200, function(){moarcats(); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+						if((enteredText.indexOf("moar") >= 0) && (enteredText.indexOf("cats") >= 0)) {
+							$('.netcat').fadeOut(200, function(){moarcats(1); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+							if (enteredText.indexOf("-noscale") >= 0) {
+								$('.netcat').fadeOut(200, function(){moarcats(0); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+							}
+							if (enteredText.indexOf("-auto") >= 0) {
+								var toParse = enteredText.substring(enteredText.indexOf('-auto') + 5);
+								var val = toParse.match(/\d+/)[0];
+								var t = Number(val);
+								if (enteredText.indexOf("-noscale") >= 0) {
+									$('.netcat').fadeOut(200, function(){autoCatInterval = window.setInterval(function(){moarcats(0)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+								} else {
+									$('.netcat').fadeOut(200, function(){autoCatInterval = window.setInterval(function(){moarcats(1)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+								}
+							}
 						}
 						return false; // prevent linebreaks
 					}
@@ -146,6 +177,7 @@
 				$(document).keydown(function(e) {
 					if(e.which == 81){
 						$('#catcontainer').fadeTo(200, 0, function(){$('.netcat').fadeIn(200)});
+						window.clearInterval(autoCatInterval);
 					}
 				});
 				var catrun;
