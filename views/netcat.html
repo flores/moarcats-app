@@ -70,6 +70,17 @@
 				left: 170px;
 				z-index: 10;
 			}
+			.helpbar {
+				position: fixed;
+				z-index: 1;
+				width: 100%;
+				padding: 0px 10px;
+				left: 0;
+				bottom: 0;
+			}
+			em {
+				font-weight: 800;
+			}
 		</style>
 		
 	</head>
@@ -89,6 +100,10 @@
 			</div>
 			<textarea class="catterm"></textarea>
 		</div>
+		
+		<div class="helpbar">
+			<em>moar cats [OPTION]</em> -auto=SECONDS -noscale
+		</div>
 
 		<script type="text/javascript">
 			
@@ -97,13 +112,15 @@
 				var winheight = $(window).height();
 				var winAspectRatio = winwidth/winheight;
 				
-				function moarcats() {
+				function moarcats(scale) {
 					var timestamp = new Date().getTime();
 					var catcontainer = $("#catcontainer");
 					catcontainer.html('<img src="http://edgecats.net?time='+timestamp+'" alt="random cat"/>');
-					$('#catcontainer img').load(function(){
-						$(this).catResize();
-					});
+					if(scale) {
+						$('#catcontainer img').load(function(){
+							$(this).catResize();
+						});
+					}
 					return false;
 				}
 					
@@ -137,8 +154,21 @@
 					if(e.which == 13) {
 						var enteredText = term.val();
 						term.val('');
-						if(enteredText == 'moar cats') {
-							$('.netcat').fadeOut(200, function(){moarcats(); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+						if((enteredText.indexOf("moar") >= 0) && (enteredText.indexOf("cats") >= 0)) {
+							$('.netcat').fadeOut(200, function(){moarcats(1); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+							if (enteredText.indexOf("-noscale") >= 0) {
+								$('.netcat').fadeOut(200, function(){moarcats(0); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+							}
+							if (enteredText.indexOf("-auto") >= 0) {
+								var toParse = enteredText.substring(enteredText.indexOf('-auto') + 5);
+								var val = toParse.match(/\d+/)[0];
+								var t = Number(val);
+								if (enteredText.indexOf("-noscale") >= 0) {
+									$('.netcat').fadeOut(200, function(){setInterval(function(){moarcats(0)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+								} else {
+									$('.netcat').fadeOut(200, function(){setInterval(function(){moarcats(1)},t*1000); $('#catcontainer').fadeTo(200, 1).css('height','100%')});
+								}
+							}
 						}
 						return false; // prevent linebreaks
 					}
