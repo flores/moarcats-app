@@ -43,7 +43,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
   app.get('*', function(req, res){
     var cat = cats[Math.floor(Math.random()*cats.length)];  
     if (req.url == '/random') {
-      res.send(req.header('host') + '/' + cat);
+      res.send('http://' + req.header('host') + '/' + cat);
     }
     else {
       fs.readFile(cat, function ( err, img ) {
