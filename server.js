@@ -47,7 +47,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
     }
     else {
       fs.readFile(cat, function ( err, img ) {
-        res.writeHead(200, {'Content-Type':'image/gif', 'Access-Control-Allow-Origin':'*'});
+        res.writeHead(200, {'Content-Type':'image/gif', 'Access-Control-Allow-Origin':'*', 'x-catgif:' + img});
         res.end(img, 'binary');
       });
     }
