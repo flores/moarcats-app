@@ -29,7 +29,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
   });
   
   app.get('/cats/:cat', function(req, res){
-    if (path.existsSync('cats/' + req.params.cat)) {
+    if (fs.existsSync('cats/' + req.params.cat)) {
       fs.readFile('cats/' + req.params.cat, function ( err, img ) {
         res.writeHead(200, {
 			'Content-Type':'image/gif',
