@@ -11,7 +11,7 @@
     "start": "/usr/bin/env node server.js"
   },
   "dependencies": {
-    "express": "latest",
-    "ejs": "latest"
+    "express": "3.0.x",
+    "ejs": "0.7.1"
   }
 }

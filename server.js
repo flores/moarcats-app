@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 var fs = require('fs'),
   path = require('path'),
   ejs = require('ejs'),
@@ -21,6 +19,20 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.render('auto.html');
   });
   
+  app.get('/all', function(req, res){
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.write('<html>');
+    for (var i = 0; i < cats.length; i++) {
+      res.write('<a href="/' + cats[i] + '" target="_blank">' + cats[i] + '</a></br>\n');
+    }
+    res.write('</html>');
+    res.end();
+  });
+
+  app.get('/all/count', function(req, res){
+    res.send('There are ' + cats.length + ' total edgecat gifs');
+  });
+
   app.get('/netcat/:image', function(req, res){
     fs.readFile('views/' + req.params.image, function ( err, img ) {
       res.writeHead(200, {'Content-Type':'image/png'});
@@ -62,6 +74,6 @@ exec('find cats -type f').stdout.on('data', function (files) {
     }
   });
 
-  app.listen(8001);
+  app.listen();
 });
 
