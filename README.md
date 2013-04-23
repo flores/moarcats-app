@@ -28,6 +28,10 @@ Also allows cross origin requests.
 
 # automagicly get moar cats!
 
+wait, first, here's a cat!
+
+![example](http://edgecats.net/a)
+
 try [/auto](http://edgecats.net/auto)!  
 
 * every 60s is a new cat
@@ -41,6 +45,10 @@ try [/netcat](http://edgecats.net/netcat) out!
 * drag him around!
 * type `moar cats` for an adorable cat!
 
+here's another cat!
+
+![example](http://edgecats.net/b)
+
 # need a random link generator or a specific cat?
 
 try [/random](http://edgecats.net/random)
@@ -48,6 +56,10 @@ try [/random](http://edgecats.net/random)
 edgecats.net/cats/<whatever> is a static cacheable cat.
 
 # want to see a shitton of cats OMG YES PLEASE!!!??!? 
+
+well here's one right now!
+
+![example](http://edgecats.net/c)
 
 * [/all](http://edgecats.net/all) for a list of all cat gifs
 * [/all/count](http://edgecats.net/all/count) for a count of all cat gifs
@@ -57,4 +69,6 @@ edgecats.net/cats/<whatever> is a static cacheable cat.
 
 This is released under the Kitty License.  If you like this code, you should scratch your nearest cat.
 
-Inspired by [placekitten](http://placekitten.com).
+Here's one more cat for the road!
+
+![example](http://edgecats.net/d)
