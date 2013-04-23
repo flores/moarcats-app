@@ -29,6 +29,16 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.end();
   });
 
+  app.get('/all/show', function(req, res){
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.write('<html>');
+    for (var i = 0; i < cats.length; i++) {
+      res.write('<img src="/' + cats[i] + '" alt="cat gifs!"/>\n');
+    }
+    res.write('</html>');
+    res.end();
+  });
+
   app.get('/all/count', function(req, res){
     res.send('There are ' + cats.length + ' total edgecat gifs');
   });
