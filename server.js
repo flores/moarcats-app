@@ -4,7 +4,7 @@ var fs = require('fs'),
   exec = require('child_process').exec,
   express = require('express');
 
-var cdn = "moar.edgecats.net";
+var cdn = "http://moar.edgecats.net";
 
 exec('find cats -type f').stdout.on('data', function (files) {
   var cats = files.split("\n");
@@ -55,18 +55,10 @@ exec('find cats -type f').stdout.on('data', function (files) {
   app.get('/cats/:cat', function(req, res){
     if (fs.existsSync('cats/' + req.params.cat)) {
       fs.readFile('cats/' + req.params.cat, function ( err, img ) {
-        if (typeof img.length != 'undefinied') {
-	  res.writeHead(200, {
-			'Content-Type':'image/gif',
-			'Access-Control-Allow-Origin':'*',
-			'Content-Length':img.length,
-	  });
-	} else {
 	  res.writeHead(200, {
 			'Content-Type':'image/gif',
 			'Access-Control-Allow-Origin':'*',
 	  });
-	}
         res.end(img, 'binary');
       });
     }
@@ -78,18 +70,11 @@ exec('find cats -type f').stdout.on('data', function (files) {
   app.get('*', function(req, res){
     var cat = cats[Math.floor(Math.random()*cats.length)];  
     if (req.url == '/random') {
-      res.send('http://' + cdn + '/' + cat);
+      res.send(cdn + '/' + cat);
     }
     else {
       fs.readFile(cat, function ( err, img ) {
 	if (typeof img.length != 'undefinied') {
-	  res.writeHead(200, {
-			'Content-Type':'image/gif',
-			'Access-Control-Allow-Origin':'*',
-			'Content-Length':img.length,
-			'X-Cat-Link':cdn + '/' + cat,
-	  });
-	} else {
 	  res.writeHead(200, {
 			'Content-Type':'image/gif',
 			'Access-Control-Allow-Origin':'*',
