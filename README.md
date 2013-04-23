@@ -28,7 +28,7 @@ Also allows cross origin requests.
 
 # automagicly get moar cats!
 
-wait, first, here's a cat!
+wait, first here's a cat!
 
 ![example](http://edgecats.net/a)
 
@@ -45,7 +45,7 @@ try [/netcat](http://edgecats.net/netcat) out!
 * drag him around!
 * type `moar cats` for an adorable cat!
 
-here's another cat!
+Awesome right?  Fuck yeah here's another cat
 
 ![example](http://edgecats.net/b)
 
@@ -53,7 +53,9 @@ here's another cat!
 
 try [/random](http://edgecats.net/random)
 
-edgecats.net/cats/<whatever> is a static cacheable cat.
+edgecats.net/cats/<whatever> is a static cacheable cat, like this one
+
+![example](http://edgecats.net/e)
 
 # want to see a shitton of cats OMG YES PLEASE!!!??!? 
 
@@ -69,6 +71,6 @@ well here's one right now!
 
 This is released under the Kitty License.  If you like this code, you should scratch your nearest cat.
 
-Here's one more cat for the road!
-
 ![example](http://edgecats.net/d)
+![example](http://edgecats.net/f)
+![example](http://edgecats.net/g)
