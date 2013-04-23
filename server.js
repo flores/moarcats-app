@@ -53,7 +53,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
   app.get('/cats/:cat', function(req, res){
     if (fs.existsSync('cats/' + req.params.cat)) {
       fs.readFile('cats/' + req.params.cat, function ( err, img ) {
-        if (img.length) {
+        if (typeof img.length != 'undefinied') {
 	  res.writeHead(200, {
 			'Content-Type':'image/gif',
 			'Access-Control-Allow-Origin':'*',
@@ -80,7 +80,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
     }
     else {
       fs.readFile(cat, function ( err, img ) {
-	if (img.length) {
+	if (typeof img.length != 'undefinied') {
 	  res.writeHead(200, {
 			'Content-Type':'image/gif',
 			'Access-Control-Allow-Origin':'*',
