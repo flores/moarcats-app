@@ -30,21 +30,28 @@ Also allows cross origin requests.
 
 try [/auto](http://edgecats.net/auto)!  
 
-every 60s is a new cat
-click the image to immediately get moar cats
+* every 60s is a new cat
+* click the image to immediately get moar cats
+* the X-cat-link header has a direct link to the current random cat
 
 # omg /netcat!!
 
 try [/netcat](http://edgecats.net/netcat) out!
 
-drag him around!
-type `moar cats` for an adorable cat!
+* drag him around!
+* type `moar cats` for an adorable cat!
 
 # need a random link generator or a specific cat?
 
 try [/random](http://edgecats.net/random)
 
-edgecats.net/cats/<whatever> is a static cacheable image.
+edgecats.net/cats/<whatever> is a static cacheable cat.
+
+# want to see a shitton of cats OMG YES PLEASE!!!??!? 
+
+* [/all](http://edgecats.net/all) for a list of all cat gifs
+* [/all/count](http://edgecats.net/all/count) for a count of all cat gifs
+* [/all/show](http://edgecats.net/all/show) to show all cat gifs.  May be slow!
 
 # license
 
