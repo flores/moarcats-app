@@ -1,4 +1,4 @@
-# [node catgifs](http://edgecats.net)
+# [moarcats](http://edgecats.net)
 
 ![example](http://edgecats.net)
 
@@ -51,9 +51,9 @@ Awesome right?  Fuck yeah here's another cat
 
 # need a random link generator or a specific cat?
 
-try [/random](http://edgecats.net/random)
+you can haz!  try [/random](http://edgecats.net/random)
 
-edgecats.net/cats/<whatever> is a static cacheable cat, like this one
+edgecats.net/cats/<whatever> is a static cacheable cat, like this motherfucker right here
 
 ![example](http://edgecats.net/e)
 
@@ -69,7 +69,7 @@ well here's one right now!
 
 # license
 
-This is released under the Kitty License.  If you like this code, you should scratch your nearest cat.
+This is released under the Kitty License.  If you like this code you should scratch your nearest cat.
 
 ![example](http://edgecats.net/d)
 ![example](http://edgecats.net/f)
