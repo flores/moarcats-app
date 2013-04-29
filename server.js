@@ -74,13 +74,11 @@ exec('find cats -type f').stdout.on('data', function (files) {
     }
     else {
       fs.readFile(cat, function ( err, img ) {
-	if (typeof img.length != 'undefinied') {
 	  res.writeHead(200, {
 			'Content-Type':'image/gif',
 			'Access-Control-Allow-Origin':'*',
 			'X-Cat-Link':cdn + '/' + cat,
 	  });
-	}
         res.end(img, 'binary');
       });
     }
