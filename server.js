@@ -1,14 +1,18 @@
+#!/usr/bin/env node
+
+var port = 9876;
+var cdn = "http://moar.edgecats.net";
+
 var fs = require('fs'),
   path = require('path'),
   ejs = require('ejs'),
   exec = require('child_process').exec,
   express = require('express');
 
-var cdn = "http://moar.edgecats.net";
+var app = express();
 
 exec('find cats -type f').stdout.on('data', function (files) {
   var cats = files.split("\n");
-  var app = express();
 
   app.set('views', __dirname + '/views');
   app.engine('html', ejs.renderFile);
@@ -84,6 +88,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
     }
   });
 
-  app.listen();
 });
 
+app.listen(port);
+console.log('here we go on port ' + port);
