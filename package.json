@@ -1,14 +1,14 @@
 {
   "name": "moarcats",
-  "description": "cat gifs everywhere.  inspired by placekitten",
+  "description": "cat gifs everywhere",
   "author": "flores <github@petalphile.com>",
   "contributors":[
     "Tianhe Yang <tianhe.yang@gmail.com>",
     "Ben Lovett <ben@tilderoot.com>"
   ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
-    "start": "/usr/bin/env node server.js"
+    "start": "server.js"
   },
   "dependencies": {
     "express": "latest",
