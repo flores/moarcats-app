@@ -4,9 +4,10 @@
   "author": "flores <github@petalphile.com>",
   "contributors":[
     "Tianhe Yang <tianhe.yang@gmail.com>",
-    "Ben Lovett <ben@tilderoot.com>"
+    "Ben Lovett <ben@tilderoot.com>",
+    "jjshoe"
   ],
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "start": "server.js"
   },
