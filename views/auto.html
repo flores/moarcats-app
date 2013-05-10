@@ -16,7 +16,6 @@
           var interval = setInterval("nextCat()", 60000);
           
           $("#catcontainer").click(function() {    
-            console.log('clicked');
             clearInterval(interval);
               nextCat();
               interval = setInterval("nextCat()", 60000);
