@@ -50,15 +50,25 @@ exec('find cats -type f').stdout.on('data', function (files) {
   });
 
   app.get('/netcat/:image', function(req, res){
-    fs.readFile('views/' + req.params.image, function ( err, img ) {
+    var rootDirectory = 'views/';
+    var filename = path.join(rootDirectory, req.params.image);
+    if (filename.indexOf(rootDirectory) !== 0) {
+      throw 'Directory traversal attack!';
+    }
+    fs.readFile(filename, function ( err, img ) {
       res.writeHead(200, {'Content-Type':'image/png'});
       res.end(img, 'binary');
     });
   });
   
   app.get('/cats/:cat', function(req, res){
-    if (fs.existsSync('cats/' + req.params.cat)) {
-      fs.readFile('cats/' + req.params.cat, function ( err, img ) {
+    var rootDirectory = 'cats/';
+    var filename = path.join(rootDirectory, req.params.cat);
+    if (filename.indexOf(rootDirectory) !== 0) {
+      throw 'Directory traversal attack!';
+    }
+    if (fs.existsSync(filename)) {
+      fs.readFile(filename, function ( err, img ) {
 	  res.writeHead(200, {
 			'Content-Type':'image/gif',
 			'Access-Control-Allow-Origin':'*',
