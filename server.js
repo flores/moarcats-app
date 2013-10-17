@@ -27,21 +27,21 @@ exec('find cats -type f').stdout.on('data', function (files) {
   
   app.get('/all', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
-    res.write('<html>');
+    res.write('<html><body>');
     for (var i = 0; i < cats.length; i++) {
       res.write('<a href="' + cdn + '/' + cats[i] + '" target="_blank">' + cats[i] + '</a></br>\n');
     }
-    res.write('</html>');
+    res.write('</body></html>');
     res.end();
   });
 
   app.get('/all/show', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
-    res.write('<html>');
+    res.write('<html><body>');
     for (var i = 0; i < cats.length; i++) {
       res.write('<img src="' + cdn + '/' + cats[i] + '" alt="cat gifs!"/>\n');
     }
-    res.write('</html>');
+    res.write('</body></html>');
     res.end();
   });
 
