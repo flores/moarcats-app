@@ -24,6 +24,16 @@ exec('find cats -type f').stdout.on('data', function (files) {
   app.get('/auto', function(req, res){
     res.render('auto.html');
   });
+
+  app.get('/meow', function(req, res){
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.write('<html><body>');
+    var reloadcat = cats[Math.floor(Math.random()*cats.length)];  
+    res.write('<img src="' + cdn + '/' + reloadcat + '"/>');
+    res.write('</body></html>');
+    res.end();
+  });
+
   
   app.get('/all', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
