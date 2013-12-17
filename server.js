@@ -30,6 +30,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.write('<html><body>');
     var reloadcat = cats[Math.floor(Math.random()*cats.length)];  
     res.write('<img src="' + cdn + '/' + reloadcat + '"/>');
+    res.write('\n<!-- check out the source at github.com/flores/moarcats -->\n');
     res.write('</body></html>');
     res.end();
   });
