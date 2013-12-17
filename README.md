@@ -6,7 +6,7 @@ cat gifs on demand for any occasion or project. Make any request for any resourc
 
 Use it anywhere you need a cat gif!  For example
 
-```<img src='http://edgecats.net' alt='a random cat gif!'/>```
+```<img src='http://edgecats.net/first' alt='a random cat gif!'/>```
 
 or something like this to click for new cat gifs
 
@@ -66,6 +66,12 @@ well here's one right now!
 * [/all](http://edgecats.net/all) for a list of all cat gifs
 * [/all/count](http://edgecats.net/all/count) for a count of all cat gifs
 * [/all/show](http://edgecats.net/all/show) to show all cat gifs.  May be slow!
+
+# oh god it needs a CDN
+
+After getting hit by social networks bandwidth became prohibitive, so enter a
+CDN from the nice folks at [EdgeCast](http://edgecast.com).  During high traffic
+periods, you may find your self redirected to [/meow](http://edgecats.net/meow),which serves a cacheable image from /cats.
 
 # license
 
