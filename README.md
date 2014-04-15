@@ -2,7 +2,7 @@
 
 ![example](http://edgecats.net)
 
-cat gifs on demand for any occasion or project. Make any request for any resource for moar cats. No 5xx or 4xx's here: just cat gifs.
+cat gifs on demand for any occasion or project.  GET any resource for moar cats. No 5xx or 4xx's here: just cat gifs.
 
 Use it anywhere you need a cat gif!  For example
 
@@ -67,7 +67,7 @@ well here's one right now!
 * [/all/count](http://edgecats.net/all/count) for a count of all cat gifs
 * [/all/show](http://edgecats.net/all/show) to show all cat gifs.  May be slow!
 
-# oh god it needs a CDN
+# oh no it needs a CDN
 
 After getting hit by social networks bandwidth became prohibitive, so enter a
 CDN from the nice folks at [EdgeCast](http://edgecast.com).  During high traffic
@@ -81,3 +81,14 @@ This is released under the Kitty License.  If you like this code you should scra
 ![example](http://edgecats.net/f)
 ![example](http://edgecats.net/g)
 ![example](http://edgecats.net/h)
+
+# contributors
+
+Ordered by date of contribution
+
+* [flores](https://github.com/flores)
+* [blovett](https://github.com/blovett)
+* [tianheyang](https://github.com/tianheyang)
+* [jjshoe](https://github.com/jjshoe)
+* [matt-](https://github.com/matt-)
+
