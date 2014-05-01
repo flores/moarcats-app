@@ -91,4 +91,5 @@ Ordered by date of contribution
 * [tianheyang](https://github.com/tianheyang)
 * [jjshoe](https://github.com/jjshoe)
 * [matt-](https://github.com/matt-)
+* [spladow](https://github.com/spladow)
 
