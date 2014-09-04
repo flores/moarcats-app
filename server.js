@@ -20,22 +20,26 @@ exec('find cats -type f').stdout.on('data', function (files) {
   app.get('/netcat', function(req, res){
     res.render('netcat.html');
   });
-  
+
   app.get('/auto', function(req, res){
     res.render('auto.html');
+  });
+
+  app.get('/auto/full', function(req, res){
+    res.render('auto_full.html');
   });
 
   app.get('/meow', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
     res.write('<html><body>');
-    var reloadcat = cats[Math.floor(Math.random()*cats.length)];  
+    var reloadcat = cats[Math.floor(Math.random()*cats.length)];
     res.write('<img src="' + cdn + '/' + reloadcat + '"/>');
     res.write('\n<!-- check out the source at github.com/flores/moarcats -->\n');
     res.write('</body></html>');
     res.end();
   });
 
-  
+
   app.get('/all', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
     res.write('<html><body>');
@@ -71,7 +75,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
       res.end(img, 'binary');
     });
   });
-  
+
   app.get('/cats/:cat', function(req, res){
     var rootDirectory = 'cats/';
     var filename = path.join(rootDirectory, req.params.cat);
@@ -93,7 +97,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
   });
 
   app.get('*', function(req, res){
-    var cat = cats[Math.floor(Math.random()*cats.length)];  
+    var cat = cats[Math.floor(Math.random()*cats.length)];
     if (req.url == '/random') {
       res.send(cdn + '/' + cat);
     }

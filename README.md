@@ -32,12 +32,13 @@ wait, first here's a cat!
 
 ![example](http://edgecats.net/a)
 
-try [/auto](http://edgecats.net/auto)!  
+try [/auto](http://edgecats.net/auto)!
 
 * every 60s is a new cat
 * click the image to immediately get moar cats
 * the X-cat-link header has a direct link to the current random cat
 
+or got to [/auto/full](http://edgecats.net/auto/full) for all dem cats in full screen!
 # omg /netcat!!
 
 try [/netcat](http://edgecats.net/netcat) out!
