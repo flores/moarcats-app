@@ -29,6 +29,10 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.render('auto_full.html');
   });
 
+  app.get('/works', function(req, res){
+    res.render('auto_works.html');
+  });
+
   app.get('/meow', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
     res.write('<html><body>');

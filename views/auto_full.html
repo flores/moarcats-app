@@ -13,12 +13,12 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-          var interval = setInterval("nextCat()", 20000);
+          var interval = setInterval("nextCat();", 20000);
 
           $("#catcontainer").click(function() {
             clearInterval(interval);
               nextCat();
-              interval = setInterval("nextCat()", 20000);
+              interval = setInterval("nextCat();", 20000);
           });
           var interval_reload = setInterval("location.reload();", 600000);
       });
