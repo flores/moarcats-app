@@ -6,6 +6,7 @@ var cdn = "http://moar.edgecats.net";
 var fs = require('fs'),
   path = require('path'),
   ejs = require('ejs'),
+  md = require('marked'),
   exec = require('child_process').exec,
   express = require('express');
 
@@ -43,6 +44,14 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.end();
   });
 
+  app.get('/help', function(req, res){
+    var html = md(fs.readFileSync('README.md', 'utf8'));
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.write('<html><body>');
+    res.write(html);
+    res.write('</body></html>');
+    res.end();
+  });
 
   app.get('/all', function(req, res){
     res.writeHead(200, {'Content-Type':'text/html'});
