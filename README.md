@@ -12,19 +12,21 @@ Use it anywhere you need a cat gif!  For example
 
 or something like this to click for new cat gifs
 
-<code>
-  &lt;div id="catcontainer" onclick="moarcats();"&gt;
-    &lt;img src="http://edgecats.net" alt="random cat"/&gt;
-  &lt;/div&gt;
+<pre>
+  <code>
+    &lt;div id="catcontainer" onclick="moarcats();"&gt;
+      &lt;img src="http://edgecats.net" alt="random cat"/&gt;
+    &lt;/div&gt;
 
-  &lt;script type="text/javascript"&gt;
-    function moarcats() {
-      var catcontainer = document.getElementById("catcontainer");
-      catcontainer.innerHTML = '&lt;img src="http://edgecats.net" alt="random cat"/&gt;';
-      return false;
-    }
-  &lt;/script&gt;
-</code>
+    &lt;script type="text/javascript"&gt;
+      function moarcats() {
+        var catcontainer = document.getElementById("catcontainer");
+        catcontainer.innerHTML = '&lt;img src="http://edgecats.net" alt="random cat"/&gt;';
+        return false;
+      }
+    &lt;/script&gt;
+  </code>
+</pre>
 
 Also allows cross origin requests.
 
