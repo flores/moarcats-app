@@ -23,7 +23,7 @@ exec('find cats -type f').stdout.on('data', function (files) {
   });
 
   app.get('/favicon.ico', function(req, res) {
-	  res.send(404);
+	  res.sendStatus(404);
   });
 
   app.get('/auto', function(req, res){
