@@ -4,7 +4,7 @@ DIR = File.expand_path(File.dirname(__FILE__))
 
 `mkdir -p #{DIR}/tmp #{DIR}/logs`
 
-environment 'production'
+environment (ENV['RACK_ENV'] || 'production')
 pidfile "#{DIR}/tmp/puma.pid"
 state_path "#{DIR}/tmp/puma.state"
 
