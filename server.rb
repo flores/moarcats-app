@@ -60,26 +60,22 @@ get '/meow' do
   erb :meow
 end
 
-get '/all' do
+get '/all/?*' do
   @all_cats = []
   get_all_cats.each do |cat|
     @all_cats << [cat, cat_url(cat)]
   end
 
-  erb :all_cats
-end
-
-get '/all/show' do
-  @all_cats = []
-  get_all_cats.each do |cat|
-    @all_cats << [cat, cat_url(cat)]
+  optpath = params['splat'][0]
+  if optpath.empty?
+    erb :all_cats
+  else
+    if optpath == 'show'
+      erb :all_cats_view
+    elsif optpath = 'count'
+      "There are #{@all_cats.length} total edgecat gifs"
+    end
   end
-
-  erb :all_cats_view
-end
-
-get '/all/count' do
-  "There are #{get_all_cats.length} total edgecat gifs"
 end
 
 get '/cats/?:cat?' do
