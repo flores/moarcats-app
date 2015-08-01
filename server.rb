@@ -5,7 +5,7 @@ require 'sinatra/reloader' if development?
 
 set :port, 9894
 set :cat_dir, File.dirname(__FILE__) + '/cats'
-set :public_folder, File.dirname(__FILE__) + '/views'
+set :public_folder, File.dirname(__FILE__) + '/static'
 set :cdn_url, "http://moar.edgecats.net"
 
 helpers do
@@ -37,23 +37,19 @@ helpers do
 end
 
 get '/netcat' do
-  send_file File.join(settings.public_folder, '/netcat.html')
-end
-
-get '/netcat/:file' do
-  send_file File.join(settings.public_folder, params[:file])
+  send_file File.join(settings.views, '/netcat.html')
 end
 
 get '/auto' do
-  send_file File.join(settings.public_folder, 'auto.html')
+  send_file File.join(settings.views, 'auto.html')
 end
 
 get '/auto/full' do
-  send_file File.join(settings.public_folder, 'auto_full.html')
+  send_file File.join(settings.views, 'auto_full.html')
 end
 
 get '/works' do
-  send_file File.join(settings.public_folder, 'auto_works.html')
+  send_file File.join(settings.views, 'auto_works.html')
 end
 
 get '/meow' do
