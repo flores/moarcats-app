@@ -22,6 +22,10 @@ exec('find cats -type f').stdout.on('data', function (files) {
     res.render('netcat.html');
   });
 
+  app.get('/favicon.ico', function(req, res) {
+	  res.sendStatus(404);
+  });
+
   app.get('/auto', function(req, res){
     res.render('auto.html');
   });
