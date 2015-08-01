@@ -9,6 +9,10 @@ set :public_folder, File.dirname(__FILE__) + '/static'
 set :cdn_url, "http://moar.edgecats.net"
 
 helpers do
+  def cat_url(cat)
+    "#{settings.cdn_url}/cats/#{cat}"
+  end
+
   def cat_dir
     settings.cat_dir
   end
@@ -30,7 +34,6 @@ helpers do
   
   def add_cat_headers
     headers \
-      "Content-Type" => "image/gif",
       "Access-Control-Allow-Origin" => "*"
   end
 
@@ -53,36 +56,26 @@ get '/works' do
 end
 
 get '/meow' do
-  content = []
-  content << '<html><body>'
-  content << '<img src="' + [settings.cdn_url, 'cats', get_random_cat].join("/") + '"/>'
-  content << '</body></html>'
-
-  headers "Content-Type" => "text/html"
-  content.join("")
+  @cat = cat_url(get_random_cat)
+  erb :meow
 end
 
 get '/all' do
-  content = []
-  content << '<html><body>'
+  @all_cats = []
   get_all_cats.each do |cat|
-    content << '<a href="' + [settings.cdn_url, 'cats', cat].join("/") +
-      '" target="_blank">' + cat + '</a><br>'
+    @all_cats << [cat, cat_url(cat)]
   end
-  content << '</body></html>'
-  headers "Content-Type" => "text/html"
-  content
+
+  erb :all_cats
 end
 
 get '/all/show' do
-  content = []
-  content << '<html><body>'
+  @all_cats = []
   get_all_cats.each do |cat|
-    content << '<img src="' + [settings.cdn_url, 'cats', cat].join("/") + '" alt="cat gifs!" />'
+    @all_cats << [cat, cat_url(cat)]
   end
-  content << '</body></html>'
-  headers "Content-Type" => "text/html"
-  content
+
+  erb :all_cats_view
 end
 
 get '/all/count' do
@@ -99,12 +92,9 @@ end
 
 get '/?:cat?' do
   add_cat_headers
-  if params[:cat]
-    if cat_exists?(params[:cat])
-      send_file File.join(settings.cat_dir, params[:cat])
-    else
-      redirect to('/'), 302
-    end
+
+  if params[:cat] and params[:cat] == 'random'
+    cat_url(get_random_cat)
   else
     send_file File.join(settings.cat_dir, get_random_cat)
   end
