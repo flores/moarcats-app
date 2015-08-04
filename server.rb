@@ -8,6 +8,8 @@ set :cat_dir, File.dirname(__FILE__) + '/cats'
 set :public_folder, File.dirname(__FILE__) + '/static'
 set :cdn_url, "http://moar.edgecats.net"
 
+GIT_REVISION = `git rev-parse --short HEAD`.chomp
+
 helpers do
   def cat_url(cat)
     "#{settings.cdn_url}/cats/#{cat}"
@@ -37,6 +39,10 @@ helpers do
       "Access-Control-Allow-Origin" => "*"
   end
 
+end
+
+before do
+  headers "X-Moarcats" => "moarcats/#{GIT_REVISION}"
 end
 
 get '/netcat' do
@@ -72,7 +78,7 @@ get '/all/?*' do
   else
     if optpath == 'show'
       erb :all_cats_view
-    elsif optpath = 'count'
+    elsif optpath == 'count'
       "There are #{@all_cats.length} total edgecat gifs"
     end
   end
