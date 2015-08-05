@@ -39,6 +39,13 @@ helpers do
       "Access-Control-Allow-Origin" => "*"
   end
 
+  def send_cat(cat)
+    if development?
+      STDERR.puts "Sending a cat! #{cat}"
+    end
+    send_file cat
+  end
+
 end
 
 before do
@@ -86,7 +93,7 @@ end
 
 get '/cats/?:cat?' do
   if params[:cat] and cat_exists?(params[:cat])
-      send_file File.join(cat_dir, params[:cat])
+      send_cat File.join(cat_dir, params[:cat])
   else
     redirect to('/'), 302
   end
@@ -98,6 +105,8 @@ get '/?:cat?' do
   if params[:cat] and params[:cat] == 'random'
     cat_url(get_random_cat)
   else
-    send_file File.join(settings.cat_dir, get_random_cat)
+    randcat = get_random_cat()
+    headers "X-Cat-Link" => cat_url(randcat)
+    send_cat File.join(settings.cat_dir, randcat)
   end
 end
