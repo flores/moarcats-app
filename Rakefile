@@ -24,3 +24,8 @@ namespace :puma do
     system("pumactl -F puma.rb status")
   end
 end
+
+desc "Run tests"
+task :test do
+  system("ruby ./tests.rb")
+end

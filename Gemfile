@@ -5,4 +5,5 @@ gem 'puma', '~> 2.8.2'
 
 group :development do
 	gem 'sinatra-reloader', '~> 1.0'
+	gem 'rack-test', '~> 0.6.3'
 end
