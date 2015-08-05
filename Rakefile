@@ -8,12 +8,12 @@ end
 namespace :puma do
   desc "Starts the moarcats server"
   task :start do
-    system("pumactl -F puma.rb start")
+    system("bundle exec pumactl -F puma.rb start")
   end
 
   desc "Stops the moarcats server"
   task :stop do
-    system("pumactl -F puma.rb stop")
+    system("bundle exec pumactl -F puma.rb stop")
   end
 
   desc "Restart the moarcats server"
@@ -21,11 +21,11 @@ namespace :puma do
 
   desc "Check the moarcats server status"
   task :status do
-    system("pumactl -F puma.rb status")
+    system("bundle exec pumactl -F puma.rb status")
   end
 end
 
 desc "Run tests"
 task :test do
-  system("ruby ./tests.rb")
+  system("bundle exec ruby ./tests.rb")
 end
