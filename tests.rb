@@ -2,6 +2,7 @@
 
 ENV['RACK_ENV'] = 'test'
 
+require 'fakeredis'
 require File.dirname(__FILE__) + "/server.rb"
 require 'test/unit'
 require 'rack/test'

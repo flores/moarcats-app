@@ -9,6 +9,7 @@ gem 'short_url', :git => 'https://github.com/arnkorty/short_url.git', :ref => '4
 group :test do
 	gem 'test-unit', '~> 3.0.8'
 	gem 'rack-test', '~> 0.6.3'
+	gem 'fakeredis'
 end
 
 group :development do
