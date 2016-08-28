@@ -19,6 +19,11 @@ class EdgecatsTest < Test::Unit::TestCase
     assert last_response.headers.has_key?("X-Cat-Link")
   end
 
+  def test_random_shortened_cat
+    get '/short'
+    assert last_response.ok?
+  end
+
   def test_specific_cat
     get '/cats/130621-33.gif'
     assert last_response.ok?

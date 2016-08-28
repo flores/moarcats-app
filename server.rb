@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'redis'
+require 'short_url'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
@@ -7,8 +9,17 @@ set :port, 9894
 set :cat_dir, File.dirname(__FILE__) + '/cats'
 set :public_folder, File.dirname(__FILE__) + '/static'
 set :cdn_url, "http://moar.edgecats.net"
+set :redis_host, "127.0.0.1"
+set :redis_port, "6379"
 
+REDIS = Redis.new(:host => settings.redis_host,
+                  :port => settings.redis_port)
 GIT_REVISION = `git rev-parse --short HEAD`.chomp
+ShortUrl.config do |cfg|
+  cfg.redis = REDIS
+  cfg.token_key = 'cats as a service'
+  cfg.type = 'md5'
+end
 
 helpers do
   def cat_url(cat)
@@ -23,6 +34,10 @@ helpers do
     File.exists?(File.join(cat_dir, cat))
   end
 
+  def is_short_cat?(cat)
+    ShortUrl.get_url(cat) rescue false
+  end
+
   def get_all_cats
     Dir.entries(cat_dir).select {|entry|
       !File.directory?(File.join(cat_dir, entry))
@@ -33,7 +48,7 @@ helpers do
     all_cats = get_all_cats
     all_cats[(Random.rand()*all_cats.length).floor]
   end
-  
+
   def add_cat_headers
     headers \
       "Access-Control-Allow-Origin" => "*"
@@ -99,11 +114,22 @@ get '/cats/?:cat?' do
   end
 end
 
+get '/short' do
+  short = ShortUrl.generate(cat_url(get_random_cat)) rescue false
+  if short
+    "#{settings.cdn_url}/#{short}"
+  else
+    500
+  end
+end
+
 get '/?:cat?' do
   add_cat_headers
 
   if params[:cat] and params[:cat] == 'random'
     cat_url(get_random_cat)
+  elsif params[:cat] and cat = ShortUrl.get_url(params[:cat])
+    send_cat File.join(settings.cat_dir, cat.split('/')[-1])
   else
     randcat = get_random_cat()
     headers "X-Cat-Link" => cat_url(randcat)
