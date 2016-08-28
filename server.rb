@@ -115,12 +115,11 @@ get '/cats/?:cat?' do
 end
 
 get '/short' do
-  short = ShortUrl.generate(cat_url(get_random_cat)) rescue false
-  if short
-    "#{settings.cdn_url}/#{short}"
-  else
-    500
+  if short = ShortUrl.generate(cat_url(get_random_cat)) rescue false
+    return "#{settings.cdn_url}/#{short}"
   end
+
+  500
 end
 
 get '/?:cat?' do
