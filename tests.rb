@@ -2,6 +2,7 @@
 
 ENV['RACK_ENV'] = 'test'
 
+require 'fakeredis'
 require File.dirname(__FILE__) + "/server.rb"
 require 'test/unit'
 require 'rack/test'
@@ -17,6 +18,11 @@ class EdgecatsTest < Test::Unit::TestCase
     get '/'
     assert last_response.ok?
     assert last_response.headers.has_key?("X-Cat-Link")
+  end
+
+  def test_random_shortened_cat
+    get '/short'
+    assert last_response.ok?
   end
 
   def test_specific_cat
