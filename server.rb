@@ -127,6 +127,8 @@ get '/?:cat?' do
 
   if params[:cat] and params[:cat] == 'random'
     cat_url(get_random_cat)
+  elsif params[:cat] and params[:cat] == 'favicon.ico'
+    404
   elsif params[:cat] and cat = ShortUrl.get_url(params[:cat])
     send_cat File.join(settings.cat_dir, cat.split('/')[-1])
   else

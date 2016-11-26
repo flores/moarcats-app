@@ -40,4 +40,9 @@ class EdgecatsTest < Test::Unit::TestCase
     get '/cats/nononononono.gif'
     assert_equal 302, last_response.status
   end
+
+  def test_favicon_404
+    get '/favicon.ico'
+    assert_equal 404, last_response.status
+  end
 end
