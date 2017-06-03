@@ -3,7 +3,6 @@
 require 'redis'
 require 'short_url'
 require 'sinatra'
-require 'sinatra/reloader' if development?
 
 set :port, 9894
 set :cat_dir, File.dirname(__FILE__) + '/cats'
@@ -55,9 +54,6 @@ helpers do
   end
 
   def send_cat(cat)
-    if development?
-      STDERR.puts "Sending a cat! #{cat}"
-    end
     send_file cat
   end
 
