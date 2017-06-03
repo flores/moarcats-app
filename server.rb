@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'redis'
+require 'redis-namespace'
 require 'short_url'
 require 'sinatra'
 require_relative 'lib/helpers'
@@ -12,8 +13,9 @@ set :cdn_url, "http://moar.edgecats.net"
 set :redis_host, "127.0.0.1"
 set :redis_port, "6379"
 
-REDIS = Redis.new(:host => settings.redis_host,
-                  :port => settings.redis_port)
+REDIS = Redis::Namespace.new(:moarcats,
+                             :r => Redis.new(:host => settings.redis_host,
+                                             :port => settings.redis_port))
 GIT_REVISION = `git rev-parse --short HEAD`.chomp
 ShortUrl.config do |cfg|
   cfg.redis = REDIS
@@ -75,11 +77,20 @@ get '/cats/?:cat?' do
 end
 
 get '/short' do
-  if short = ShortUrl.generate(cat_url(get_random_cat)) rescue false
-    return "#{settings.cdn_url}/#{short}"
+  if short = ShortUrl.generate(get_random_cat) rescue false
+    return "#{settings.cdn_url}/c/#{short}"
   end
 
   500
+end
+
+get '/c/:cat' do
+  if cat = ShortUrl.get_url(params[:cat])
+    headers "X-Cat-Link" => cat
+    return send_cat File.join(settings.cat_dir, cat)
+  end
+
+  404
 end
 
 get '/favicon.ico' do
@@ -92,14 +103,7 @@ end
 
 get '/?:cat?' do
   add_cat_headers
-
-  if params[:cat] and cat = ShortUrl.get_url(params[:cat])
-    cat_file = cat.split('/')[-1]
-    headers "X-Cat-Link" => cat
-    send_cat File.join(settings.cat_dir, cat_file)
-  else
-    randcat = get_random_cat()
-    headers "X-Cat-Link" => cat_url(randcat)
-    send_cat File.join(settings.cat_dir, randcat)
-  end
+  randcat = get_random_cat()
+  headers "X-Cat-Link" => cat_url(randcat)
+  send_cat File.join(settings.cat_dir, randcat)
 end
