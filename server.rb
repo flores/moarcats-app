@@ -82,15 +82,21 @@ get '/short' do
   500
 end
 
+get '/favicon.ico' do
+  404
+end
+
+get '/random' do
+  cat_url(get_random_cat)
+end
+
 get '/?:cat?' do
   add_cat_headers
 
-  if params[:cat] and params[:cat] == 'random'
-    cat_url(get_random_cat)
-  elsif params[:cat] and params[:cat] == 'favicon.ico'
-    404
-  elsif params[:cat] and cat = ShortUrl.get_url(params[:cat])
-    send_cat File.join(settings.cat_dir, cat.split('/')[-1])
+  if params[:cat] and cat = ShortUrl.get_url(params[:cat])
+    cat_file = cat.split('/')[-1]
+    headers "X-Cat-Link" => cat
+    send_cat File.join(settings.cat_dir, cat_file)
   else
     randcat = get_random_cat()
     headers "X-Cat-Link" => cat_url(randcat)
