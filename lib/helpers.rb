@@ -31,6 +31,14 @@ module SinatraHelpers
       "Access-Control-Allow-Origin" => "*"
   end
 
+  def enable_http_cache
+      headers "Cache-Control" => "max-age=#{86400*365}, public"
+  end
+  
+  def disable_http_cache
+      headers "Cache-Control" => "no-cache"
+  end
+
   def send_cat(cat)
     send_file cat
   end

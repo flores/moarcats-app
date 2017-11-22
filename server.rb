@@ -27,6 +27,7 @@ helpers SinatraHelpers
 
 before do
   headers "X-Moarcats" => "moarcats/#{GIT_REVISION}"
+  disable_http_cache
 end
 
 get '/netcat' do
@@ -70,6 +71,7 @@ end
 
 get '/cats/?:cat?' do
   if params[:cat] and cat_exists?(params[:cat])
+      enable_http_cache
       send_cat File.join(cat_dir, params[:cat])
   else
     redirect to('/'), 302
