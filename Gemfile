@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', '~> 2.0.0'
-gem 'puma', '~> 3.9.0'
+gem 'puma', '~> 3.11.4'
 gem 'rake'
-gem 'redis', '~> 3.2.2'
-gem 'redis-namespace', '~> 1.5.3'
+gem 'redis', '~> 4.0.1'
+gem 'redis-namespace', '~> 1.6.0'
 gem 'short_url', :git => 'https://github.com/blovett/short_url.git', :ref => '4a0820cbb811457e842044424f1fa26c97f769cf'
 
 group :test do

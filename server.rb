@@ -6,17 +6,13 @@ require 'short_url'
 require 'sinatra'
 require_relative 'lib/helpers'
 
-set :port, 9894
-set :cat_dir, File.dirname(__FILE__) + '/cats'
+set :port, (ENV["PORT"] || 9894)
+set :cat_dir, ENV["CATS_DIR"] || File.dirname(__FILE__) + '/cats'
 set :public_folder, File.dirname(__FILE__) + '/static'
 set :cdn_url, "http://moar.edgecats.net"
-set :redis_host, "127.0.0.1"
-set :redis_port, "6379"
 
 REDIS = Redis::Namespace.new(:moarcats,
-                             :r => Redis.new(:host => settings.redis_host,
-                                             :port => settings.redis_port))
-GIT_REVISION = `git rev-parse --short HEAD`.chomp
+                             :r => Redis.new)
 ShortUrl.config do |cfg|
   cfg.redis = REDIS
   cfg.token_key = 'cats as a service'
@@ -26,7 +22,6 @@ end
 helpers SinatraHelpers
 
 before do
-  headers "X-Moarcats" => "moarcats/#{GIT_REVISION}"
   disable_http_cache
 end
 

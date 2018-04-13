@@ -1,0 +1,15 @@
+# vim:ft=yaml
+version: "3.3"
+services:
+  moarcats:
+    image: moarcats
+    build:
+      context: .
+    container_name: moarcats
+    ports:
+      - 8080
+    volumes:
+      - ./cats:/cats:ro
+    environment:
+      - RACK_ENV
+      - SOURCE_COMMIT
