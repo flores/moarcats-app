@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'redis'
-require 'redis-namespace'
-require 'short_url'
-require 'sinatra'
+RACK_ENV = (ENV["RACK_ENV"] || :production).to_sym
+Bundler.require(:default, RACK_ENV)
 require_relative 'lib/helpers'
 
 set :port, (ENV["PORT"] || 9894)

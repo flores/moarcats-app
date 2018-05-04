@@ -1,10 +1,5 @@
 require 'rake'
 
-begin
-  load File.expand_path(File.dirname(__FILE__) + '/server.rb')
-rescue LoadError
-end
-
 namespace :puma do
   desc "Starts the moarcats server"
   task :start do
