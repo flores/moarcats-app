@@ -12,7 +12,7 @@ EXPOSE $PORT
 RUN apk update && \
     apk add --no-cache ruby-bundler && \
     apk add --no-cache --virtual .build-deps git build-base gcc \
-	abuild binutils linux-headers
+	abuild binutils linux-headers gmp-dev
 
 WORKDIR $APP_HOME
 VOLUME /cats
