@@ -1,4 +1,6 @@
-FROM ruby:2.4-alpine AS build-image
+ARG RUBY_VERSION=2.6
+
+FROM ruby:$RUBY_VERSION-alpine AS build-image
 
 RUN apk update && \
     apk add --no-cache ruby-bundler && \
@@ -8,13 +10,13 @@ RUN apk update && \
 ADD Gemfile /
 RUN gem install bundler && bundle install
 
-FROM ruby:2.4-alpine
+FROM ruby:$RUBY_VERSION-alpine
 
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
 ENV APP_HOME=/opt/moarcats
 ENV RACK_ENV=production
-ENV PORT=8080
+ENV PORT=5000
 ENV CATS_DIR=/cats
 
 EXPOSE $PORT
