@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', '~> 2.0.0'
-gem 'puma', '~> 3.11.4'
+gem 'puma', '~> 4.3.1'
 gem 'rake'
 gem 'redis', '~> 4.0.1'
 gem 'redis-namespace', '~> 1.6.0'
