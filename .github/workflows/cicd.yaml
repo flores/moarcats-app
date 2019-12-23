@@ -16,6 +16,7 @@ jobs:
       - name: Build image
         run: |
           docker build -t docker.pkg.github.com/flores/moarcats/app:$(echo $GITHUB_SHA | head -c7) .
+          docker tag docker.pkg.github.com/flores/moarcats/app:$(echo $GITHUB_SHA | head -c7) docker.pkg.github.com/flores/moarcats/app:latest
       - name: Publish image
         run: |
           docker push docker.pkg.github.com/flores/moarcats/app
