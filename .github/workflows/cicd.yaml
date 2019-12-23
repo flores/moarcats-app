@@ -14,7 +14,7 @@ jobs:
       - name: Login to registry
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} --password-stdin docker.pkg.github.com
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Build image
         run: |
           docker build -t docker.pkg.github.com/flores/moarcats/app:$(echo $GITHUB_SHA | head -c7) .
