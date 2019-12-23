@@ -1,0 +1,15 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build container image
+        run: |
+          docker build -t docker.pkg.github.com/blovett/moarcats/app:$(echo $GITHUB_SHA | head -c7) .
+          docker push docker.pkg.github.com/blovett/moarcats/app
