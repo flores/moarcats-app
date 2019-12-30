@@ -65,7 +65,7 @@ end
 get '/cats/?:cat?' do
   if params[:cat] and cat_exists?(params[:cat])
       enable_http_cache
-      send_cat File.join(cat_dir, params[:cat])
+      send_cat(params[:cat])
   else
     redirect to('/'), 302
   end
@@ -100,5 +100,5 @@ get '/?:cat?' do
   add_cat_headers
   randcat = get_random_cat()
   headers "X-Cat-Link" => cat_url(randcat)
-  send_cat File.join(settings.cat_dir, randcat)
+  send_cat(randcat)
 end
