@@ -1,5 +1,21 @@
+require 'aws-sdk-s3'
 require 'http'
 require 'zache'
+
+S3_ENABLED = ['S3_ACCESS_KEY_ID', 'S3_SECRET_KEY', 'S3_ENDPOINT',
+              'S3_BUCKET_NAME'].all? { |k| ENV.key?(k) }
+
+if S3_ENABLED
+  Aws.config[:credentials] = Aws::Credentials.new(ENV['S3_ACCESS_KEY_ID'],
+                                                  ENV['S3_SECRET_KEY'])
+  if ENV['S3_ENDPOINT']
+    S3 = Aws::S3::Client.new(:endpoint => ENV['S3_ENDPOINT'],
+                             :region => ENV['AWS_REGION'] || ENV['S3_REGION'])
+  else
+    S3 = Aws::S3::Client.new
+  end
+  S3_BUCKET_NAME = ENV['S3_BUCKET_NAME']
+end
 
 CACHE = Zache.new
 
@@ -21,13 +37,15 @@ module SinatraHelpers
   end
 
   def get_all_cats
-    if ENV['LOAD_FROM_OBJECT_STORE'] && ENV['OBJECT_STORE_URL']
+    if S3_ENABLED
       CACHE.get(:cats, lifetime: (10*60)) {
-        resp = HTTP.get(File.join(ENV['OBJECT_STORE_URL'], "cats.json"))
-        result = JSON.parse(resp.to_s)
-        result['cats']
+        STDERR.puts "Getting list of cats with S3 api"
+        contents = nil
+        S3.list_objects(bucket: S3_BUCKET_NAME).each { |r| contents = r.contents }
+        contents.map { |c| c.key }
       }
     else
+      puts "Getting list of cats from disk"
       Dir.entries(cat_dir).select do |entry|
         entry =~ /\.gif$/
       end
@@ -53,7 +71,7 @@ module SinatraHelpers
 
   def send_cat(cat)
     puts "Request for #{cat}..."
-    if ENV['LOAD_FROM_OBJECT_STORE'] && ENV['OBJECT_STORE_URL']
+    if S3_ENABLED
       proxy_request(cat)
     else
       send_file(File.join(cat_dir, cat))
@@ -61,7 +79,7 @@ module SinatraHelpers
   end
 
   def proxy_request(cat)
-    uri = URI(File.join(ENV['OBJECT_STORE_URL'], cat))
+    uri = URI(File.join(ENV['S3_ENDPOINT'], ENV['S3_BUCKET_NAME'], cat))
     puts "Proxying request for #{cat} to #{uri}..."
     resp = HTTP.get(uri)
     reply_headers = resp.headers.reject { |k,v|

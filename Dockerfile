@@ -2,8 +2,8 @@ ARG RUBY_VERSION=2.6
 
 FROM ruby:$RUBY_VERSION-alpine AS build-image
 
-RUN apk update && \
-    apk add --no-cache ruby-bundler && \
+RUN apk update
+RUN apk add --no-cache ruby-bundler && \
     apk add --no-cache --virtual .build-deps git build-base gcc \
 	abuild binutils linux-headers gmp-dev
 
