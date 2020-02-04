@@ -2,10 +2,12 @@ require 'aws-sdk-s3'
 require 'http'
 require 'zache'
 
-S3_ENABLED = ['S3_ACCESS_KEY_ID', 'S3_SECRET_KEY', 'S3_ENDPOINT',
-              'S3_BUCKET_NAME'].all? { |k| ENV.key?(k) }
+if CAT_PROXY = ['USE_CAT_PROXY', 'CAT_PROXY_URL'].all? { |k| ENV.key?(k) }
+  CAT_PROXY_URL = ENV['CAT_PROXY_URL']
+end
 
-if S3_ENABLED
+if S3_ENABLED = ['S3_ACCESS_KEY_ID', 'S3_SECRET_KEY', 'S3_ENDPOINT',
+              'S3_BUCKET_NAME'].all? { |k| ENV.key?(k) }
   Aws.config[:credentials] = Aws::Credentials.new(ENV['S3_ACCESS_KEY_ID'],
                                                   ENV['S3_SECRET_KEY'])
   if ENV['S3_ENDPOINT']
@@ -70,7 +72,7 @@ module SinatraHelpers
   end
 
   def send_cat(cat)
-    puts "Request for #{cat}..."
+    puts "Requesting cat #{cat} report for duty!"
     if S3_ENABLED
       proxy_request(cat)
     else
@@ -79,12 +81,15 @@ module SinatraHelpers
   end
 
   def proxy_request(cat)
-    uri = URI(File.join(ENV['S3_ENDPOINT'], ENV['S3_BUCKET_NAME'], cat))
-    puts "Proxying request for #{cat} to #{uri}..."
-    resp = HTTP.get(uri)
-    reply_headers = resp.headers.reject { |k,v|
-      ["Connection", "X-Amz-Meta-S3cmd-Attrs", "X-Amz-Request-Id"].include?(k)
-    }
+    url = if CAT_PROXY
+      URI(File.join(CAT_PROXY_URL, cat))
+    else
+      URI(File.join(ENV['S3_ENDPOINT'], ENV['S3_BUCKET_NAME'], cat))
+    end
+
+    resp = HTTP.get(url)
+    reply_headers = {'content-length' => resp.headers['content-length'],
+                     'content-type' => resp.headers['content-type']}
 
     [resp.code, reply_headers, resp.body]
   end
