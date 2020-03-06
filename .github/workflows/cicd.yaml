@@ -1,11 +1,6 @@
 name: CI/CD
 
-on:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron: '47 * * * *'
+on: [push]
 
 jobs:
   deploy:
