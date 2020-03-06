@@ -32,7 +32,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Tag latest docker image if on master
-        if: ${{ github.ref }} == "master"
+        if: github.ref == 'master'
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
