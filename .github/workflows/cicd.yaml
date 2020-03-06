@@ -9,16 +9,44 @@ on:
 
 jobs:
   deploy:
+    name: Build and upload to AWS ECR
     runs-on: ubuntu-latest
+
     steps:
-      - name: Login to registry
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and tag docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: moarcats
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} --password-stdin docker.pkg.github.com
-      - uses: actions/checkout@v2
-      - name: Build image
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Tag latest docker image if on master
+        if: ${{ github.ref }} == "master"
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: moarcats
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t docker.pkg.github.com/flores/moarcats/app:$(echo $GITHUB_SHA | head -c7) .
-          docker tag docker.pkg.github.com/flores/moarcats/app:$(echo $GITHUB_SHA | head -c7) docker.pkg.github.com/flores/moarcats/app:latest
-      - name: Publish image
-        run: |
-          docker push docker.pkg.github.com/flores/moarcats/app
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Logout of AWS ECR
+        if: always()
+        run: docker logout ${{ steps.login-ecr.outputs.registry }}
