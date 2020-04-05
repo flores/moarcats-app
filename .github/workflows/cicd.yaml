@@ -31,7 +31,7 @@ jobs:
           image_tag="$(date +%Y%m%d%H%M%S)-$(echo ${{ github.sha }} | cut -c1-6)"
           echo "::set-env name=image_tag::$image_tag"
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:image_tag
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag
 
       - name: Tag latest docker image if on master
         if: github.ref == 'refs/heads/master'
