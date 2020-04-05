@@ -3,7 +3,7 @@ name: CI/CD
 on:
   schedule:
     # schedule for 0242 every sunday
-    - cron: '42 2 * * 7'
+    - cron: '42 2 * * 0'
   push:
     branches:
       - master
