@@ -1,6 +1,15 @@
 name: CI/CD
 
-on: [push]
+on:
+  schedule:
+    # schedule for 0242 every sunday
+    - cron: '42 2 * * 0'
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -23,13 +32,12 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and tag docker image
-        id: build-step
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
         run: |
           image_tag="$(date +%Y%m%d%H%M%S)-$(echo ${{ github.sha }} | cut -c1-6)"
-          echo "::set-env name=image_tag::$image_tag"
+          echo "::set-env name=IMAGE_TAG::$image_tag"
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag
 
@@ -39,9 +47,14 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
         run: |
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.build-step.env.image_tag }} \
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} \
             $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Log the tag name
+        if: github.ref != 'refs/heads/master'
+        run: |
+          echo "Would have tagged image ${{ env.IMAGE_TAG }} as latest, if we were on the master branch."
 
       - name: Logout of AWS ECR
         if: always()
