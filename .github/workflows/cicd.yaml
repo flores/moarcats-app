@@ -42,6 +42,11 @@ jobs:
             $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
+      - name: Log the tag name
+        if: github.ref != 'refs/heads/master'
+        run: |
+          echo "Would have tagged image ${{ env.IMAGE_TAG }} as latest, if we were on the master branch."
+
       - name: Logout of AWS ECR
         if: always()
         run: docker logout ${{ steps.login-ecr.outputs.registry }}
