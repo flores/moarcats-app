@@ -1,6 +1,15 @@
 name: CI/CD
 
-on: [push]
+on:
+  schedule:
+    # schedule for 0242 every sunday
+    - cron: '42 2 * * 7'
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   deploy:
