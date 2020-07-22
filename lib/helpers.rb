@@ -2,12 +2,12 @@ require "aws-sdk-s3"
 require "http"
 require "zache"
 
-if CAT_PROXY = ["USE_CAT_PROXY", "CAT_PROXY_URL"].all? { |k| ENV.key?(k) }
+if (CAT_PROXY = ["USE_CAT_PROXY", "CAT_PROXY_URL"].all? { |k| ENV.key?(k) })
   CAT_PROXY_URL = ENV["CAT_PROXY_URL"]
 end
 
-if S3_ENABLED = ["S3_ACCESS_KEY_ID", "S3_SECRET_KEY", "S3_ENDPOINT",
-  "S3_BUCKET_NAME"].all? { |k| ENV.key?(k) }
+if (S3_ENABLED = ["S3_ACCESS_KEY_ID", "S3_SECRET_KEY", "S3_ENDPOINT",
+  "S3_BUCKET_NAME"].all? { |k| ENV.key?(k) })
   Aws.config[:credentials] = Aws::Credentials.new(ENV["S3_ACCESS_KEY_ID"],
     ENV["S3_SECRET_KEY"])
   S3 = if ENV["S3_ENDPOINT"]

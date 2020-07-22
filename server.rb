@@ -45,12 +45,12 @@ get "/all/?*" do
   optpath = params["splat"][0]
   if optpath.empty?
     erb :all_cats
+  elsif optpath == "show"
+    erb :all_cats_view
+  elsif optpath == "count"
+    "There are #{@all_cats.length} total edgecat gifs"
   else
-    if optpath == "show"
-      erb :all_cats_view
-    elsif optpath == "count"
-      "There are #{@all_cats.length} total edgecat gifs"
-    end
+    400
   end
 end
 

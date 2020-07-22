@@ -5,6 +5,7 @@ ENV["RACK_ENV"] = "test"
 require File.dirname(__FILE__) + "/server.rb"
 require "test/unit"
 require "rack/test"
+require "securerandom"
 
 class EdgecatsTest < Test::Unit::TestCase
   include Rack::Test::Methods
@@ -28,6 +29,17 @@ class EdgecatsTest < Test::Unit::TestCase
   def test_all
     get "/all"
     assert last_response.ok?
+  end
+
+  def test_all_count
+    get "/all/count"
+    assert last_response.ok?
+    assert /total edgecat gifs/ =~ last_response.body
+  end
+
+  def test_all_unknown
+    get "/all/#{SecureRandom.hex}"
+    refute last_response.ok?
   end
 
   def test_nonexistant_cat_redirect
