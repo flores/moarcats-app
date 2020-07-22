@@ -9,14 +9,6 @@ set :cat_dir, ENV["CATS_DIR"] || File.dirname(__FILE__) + '/cats'
 set :public_folder, File.dirname(__FILE__) + '/static'
 set :cdn_url, "http://moar.edgecats.net"
 
-REDIS = Redis::Namespace.new(:moarcats,
-                             :r => Redis.new)
-ShortUrl.config do |cfg|
-  cfg.redis = REDIS
-  cfg.token_key = 'cats as a service'
-  cfg.type = 'md5'
-end
-
 helpers SinatraHelpers
 
 before do
@@ -69,23 +61,6 @@ get '/cats/?:cat?' do
   else
     redirect to('/'), 302
   end
-end
-
-get '/short' do
-  if short = ShortUrl.generate(get_random_cat) rescue false
-    return "#{settings.cdn_url}/c/#{short}"
-  end
-
-  500
-end
-
-get '/c/:cat' do
-  if cat = ShortUrl.get_url(params[:cat])
-    headers "X-Cat-Link" => cat
-    return send_cat File.join(settings.cat_dir, cat)
-  end
-
-  404
 end
 
 get '/favicon.ico' do
