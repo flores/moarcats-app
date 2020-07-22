@@ -9,6 +9,7 @@ gem 'zache', '~> 0'
 
 group :development, :test do
   gem 'dotenv', '~> 2'
+  gem "standard"
 end
 
 group :test do

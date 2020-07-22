@@ -1,4 +1,5 @@
 require 'rake'
+require "standard/rake"
 
 namespace :puma do
   desc "Starts the moarcats server"
