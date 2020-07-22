@@ -34,10 +34,6 @@ module SinatraHelpers
     get_all_cats.select { |e| e == cat  }.any?
   end
 
-  def is_short_cat?(cat)
-    ShortUrl.get_url(cat) rescue false
-  end
-
   def get_all_cats
     if S3_ENABLED
       CACHE.get(:cats, lifetime: (10*60)) {
