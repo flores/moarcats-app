@@ -1,2 +1,2 @@
-require File.expand_path(File.dirname(__FILE__)) + '/server.rb'
+require __dir__ + "/server.rb"
 run Sinatra::Application
