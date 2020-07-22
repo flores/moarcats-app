@@ -16,6 +16,6 @@ end
 
 group :test do
 	gem 'test-unit', '~> 3.3.6'
-	gem 'rack-test', '~> 0.6.3'
+	gem 'rack-test', '~> 1.1.0'
 	gem 'fakeredis'
 end
