@@ -1,19 +1,18 @@
 ARG RUBY_VERSION=2.7
 
-FROM ruby:$RUBY_VERSION-alpine AS build-image
-
-RUN apk update
-RUN apk add --no-cache ruby-bundler && \
-    apk add --no-cache --virtual .build-deps git build-base gcc \
-	abuild binutils linux-headers gmp-dev
+FROM ruby:$RUBY_VERSION-slim-buster AS build-image
 
 ADD Gemfile /
-RUN gem install bundler && bundle install
 
-FROM ruby:$RUBY_VERSION-alpine
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+      build-essential; \
+    gem install bundler; \
+    bundle install
 
-ARG SOURCE_COMMIT
-ENV SOURCE_COMMIT=$SOURCE_COMMIT
+FROM ruby:$RUBY_VERSION-slim-buster
+
 ENV APP_HOME=/opt/moarcats
 ENV RACK_ENV=production
 ENV PORT=5000
@@ -28,6 +27,10 @@ WORKDIR $APP_HOME
 VOLUME /cats
 ADD Gemfile $APP_HOME
 COPY . $APP_HOME
+
+# basic smoke check
+RUN set -eux; \
+    bundle env
 
 USER nobody
 CMD ["rake", "puma:start"]
