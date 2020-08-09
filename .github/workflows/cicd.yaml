@@ -31,15 +31,54 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build and tag docker image
+      - name: Setup docker buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v3
+        with:
+          buildx-version: latest
+          qemu-version: latest
+
+      - name: Cache docker layers
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-
+
+      - name: Docker buildx (build)
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
         run: |
           image_tag="$(date +%Y%m%d%H%M%S)-$(echo ${{ github.sha }} | cut -c1-6)"
           echo "::set-env name=IMAGE_TAG::$image_tag"
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag
+          docker buildx build \
+              --cache-from "type=local,src=/tmp/.buildx-cache" \
+              --cache-to "type=local,dest=/tmp/.buildx-cache" \
+              --platform linux/amd64,linux/arm/v7 \
+              --output "type=image,push=false" \
+              --tag $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag \
+              --file ./Dockerfile ./
+
+      - name: Docker buildx (push)
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: moarcats
+        run: |
+          docker buildx build \
+              --cache-from "type=local,src=/tmp/.buildx-cache" \
+              --platform linux/amd64,linux/arm/v7 \
+              --output "type=image,push=true" \
+              --tag $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag \
+              --file ./Dockerfile ./
+
+      - name: Docker check manifest
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: moarcats
+        run: |
+          docker run --rm mplatform/mquery $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag
 
       - name: Tag latest docker image if on master
         if: github.ref == 'refs/heads/master'
@@ -47,9 +86,12 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
         run: |
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} \
-            $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker buildx build \
+              --cache-from "type=local,src=/tmp/.buildx-cache" \
+              --platform linux/amd64,linux/arm/v7 \
+              --output "type=image,push=true" \
+              --tag $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+              --file ./Dockerfile ./
 
       - name: Log the tag name
         if: github.ref != 'refs/heads/master'
