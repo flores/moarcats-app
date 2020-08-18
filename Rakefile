@@ -1,4 +1,5 @@
-require 'rake'
+require "rake"
+require "standard/rake"
 
 namespace :puma do
   desc "Starts the moarcats server"
@@ -12,7 +13,7 @@ namespace :puma do
   end
 
   desc "Restart the moarcats server"
-  task :restart => [:stop, :start]
+  task restart: [:stop, :start]
 
   desc "Check the moarcats server status"
   task :status do
