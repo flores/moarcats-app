@@ -34,7 +34,7 @@ class EdgecatsTest < Test::Unit::TestCase
   def test_all_count
     get "/all/count"
     assert last_response.ok?
-    assert /total edgecat gifs/ =~ last_response.body
+    assert(/total edgecat gifs/ =~ last_response.body)
   end
 
   def test_all_unknown
