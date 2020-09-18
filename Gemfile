@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "sinatra", "~> 2.0.0"
-gem "puma", "~> 4.3.1"
+gem "puma", "~> 5.0.0"
 gem "rake"
 gem "aws-sdk-s3", "~> 1"
 gem "http", "~> 4"
