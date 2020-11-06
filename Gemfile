@@ -5,7 +5,7 @@ gem "http", "~> 4"
 gem "prometheus-client", "~> 2.1.0"
 gem "puma", "~> 4.3.1"
 gem "rake"
-gem "sinatra", "~> 2.0.0"
+gem "sinatra", "~> 2.1.0"
 gem "zache", "~> 0"
 
 group :development, :test do
