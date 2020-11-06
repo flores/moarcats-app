@@ -1,10 +1,11 @@
 source "https://rubygems.org"
 
-gem "sinatra", "~> 2.0.0"
-gem "puma", "~> 4.3.1"
-gem "rake"
 gem "aws-sdk-s3", "~> 1"
 gem "http", "~> 4"
+gem "prometheus-client", "~> 2.1.0"
+gem "puma", "~> 4.3.1"
+gem "rake"
+gem "sinatra", "~> 2.0.0"
 gem "zache", "~> 0"
 
 group :development, :test do
@@ -13,6 +14,6 @@ group :development, :test do
 end
 
 group :test do
-  gem "test-unit", "~> 3.3.6"
   gem "rack-test", "~> 1.1.0"
+  gem "test-unit", "~> 3.3.6"
 end
