@@ -37,7 +37,7 @@ jobs:
           ECR_REPOSITORY: moarcats
         run: |
           image_tag="$(date +%Y%m%d%H%M%S)-$(echo ${{ github.sha }} | cut -c1-6)"
-          echo "::set-env name=IMAGE_TAG::$image_tag"
+          echo "IMAGE_TAG=$image_tag" >> $GITHUB_ENV
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$image_tag
 
