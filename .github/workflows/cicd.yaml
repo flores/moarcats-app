@@ -35,6 +35,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
+          DOCKER_BUILDKIT: 1
         run: |
           image_tag="$(date +%Y%m%d%H%M%S)-$(echo ${{ github.sha }} | cut -c1-6)"
           echo "IMAGE_TAG=$image_tag" >> $GITHUB_ENV
