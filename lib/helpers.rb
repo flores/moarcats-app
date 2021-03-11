@@ -1,6 +1,4 @@
-require "aws-sdk-s3"
 require "http"
-require "zache"
 
 if (CAT_PROXY = ["USE_CAT_PROXY", "CAT_PROXY_URL"].all? { |k| ENV.key?(k) })
   CAT_PROXY_URL = ENV["CAT_PROXY_URL"]
