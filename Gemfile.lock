@@ -74,7 +74,7 @@ GEM
     unicode-display_width (2.0.0)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-20
 
 DEPENDENCIES
   dotenv (~> 2)
@@ -88,4 +88,4 @@ DEPENDENCIES
   test-unit (~> 3.4.0)
 
 BUNDLED WITH
-   2.1.4
+   2.2.14
