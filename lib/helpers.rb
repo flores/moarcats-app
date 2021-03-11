@@ -6,21 +6,6 @@ if (CAT_PROXY = ["USE_CAT_PROXY", "CAT_PROXY_URL"].all? { |k| ENV.key?(k) })
   CAT_PROXY_URL = ENV["CAT_PROXY_URL"]
 end
 
-if (S3_ENABLED = ["S3_ACCESS_KEY_ID", "S3_SECRET_KEY", "S3_ENDPOINT",
-  "S3_BUCKET_NAME"].all? { |k| ENV.key?(k) })
-  Aws.config[:credentials] = Aws::Credentials.new(ENV["S3_ACCESS_KEY_ID"],
-    ENV["S3_SECRET_KEY"])
-  S3 = if ENV["S3_ENDPOINT"]
-    Aws::S3::Client.new(endpoint: ENV["S3_ENDPOINT"],
-                        region: ENV["AWS_REGION"] || ENV["S3_REGION"])
-  else
-    Aws::S3::Client.new
-  end
-  S3_BUCKET_NAME = ENV["S3_BUCKET_NAME"]
-end
-
-CACHE = Zache.new
-
 module SinatraHelpers
   def cat_url(cat)
     "#{settings.cdn_url}/cats/#{cat}"
@@ -35,13 +20,10 @@ module SinatraHelpers
   end
 
   def get_all_cats
-    if S3_ENABLED
-      CACHE.get(:cats, lifetime: (10 * 60)) {
-        warn "Getting list of cats with S3 api"
-        contents = nil
-        S3.list_objects(bucket: S3_BUCKET_NAME).each { |r| contents = r.contents }
-        contents.map { |c| c.key }
-      }
+    if CAT_PROXY
+      url = URI(File.join(::CAT_PROXY_URL, "list-of-cats.txt"))
+      resp = HTTP.get(url)
+      resp.to_s.split("\n")
     else
       puts "Getting list of cats from disk"
       Dir.entries(cat_dir).select do |entry|
@@ -69,7 +51,7 @@ module SinatraHelpers
 
   def send_cat(cat)
     puts "Requesting cat #{cat} report for duty!"
-    if S3_ENABLED
+    if CAT_PROXY
       proxy_request(cat)
     else
       send_file(File.join(cat_dir, cat))
