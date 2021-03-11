@@ -10,12 +10,17 @@ on:
 
 jobs:
   deploy:
-    name: Build and upload to AWS ECR
+    name: Build and deploy container image
     runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Configure digitalocean
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -36,12 +41,18 @@ jobs:
           echo "IMAGE_TAG=$image_tag" >> $GITHUB_ENV
           docker build -t moarcats:$image_tag .
 
+      - name: Login to digitalocean registry
+        run: |
+          doctl registry login --expiry-seconds 300
+
       - name: Tag for release
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
         run: |
           docker tag moarcats:${{ env.IMAGE_TAG }} $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+          docker tag moarcats:${{ env.IMAGE_TAG }} registry.digitalocean.com/moarcats/moarcats-app:${{ env.IMAGE_TAG }}
+          docker push registry.digitalocean.com/moarcats/moarcats-app:${{ env.IMAGE_TAG }}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
 
       - name: Tag latest docker image if on master
@@ -49,10 +60,15 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: moarcats
         run: |
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} \
+          docker tag moarcats:${{ env.IMAGE_TAG }} \
+            registry.digitalocean.com/moarcats/moarcats-app:latest
+          docker tag moarcats:${{ env.IMAGE_TAG }} \
             $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push registry.digitalocean.com/moarcats/moarcats-app:latest
 
-      - name: Logout of AWS ECR
+      - name: Logout of registries
         if: always()
-        run: docker logout ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker logout ${{ steps.login-ecr.outputs.registry }}
+          doctl registry logout
