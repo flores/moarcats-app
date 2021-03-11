@@ -14,11 +14,6 @@ jobs:
         with:
           ruby-version: "2.7"
           bundler-cache: true
-      - name: bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle config with "development test"
-          bundle install --jobs 4 --retry 3
       - name: standardsrb
         run: |
           bundle exec rake standard
