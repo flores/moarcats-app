@@ -30,7 +30,7 @@ GEM
     power_assert (2.0.0)
     prometheus-client (2.1.0)
     public_suffix (4.0.6)
-    puma (5.2.2)
+    puma (5.3.0)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-protection (2.1.0)
@@ -81,7 +81,7 @@ DEPENDENCIES
   dotenv (~> 2)
   http (~> 4)
   prometheus-client (~> 2.1.0)
-  puma (~> 5.2.2)
+  puma (~> 5.3.0)
   rack-test (~> 1.1.0)
   rake
   sinatra (~> 2.1.0)
