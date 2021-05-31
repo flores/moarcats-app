@@ -65,7 +65,7 @@ GEM
     standard (1.0.5)
       rubocop (= 1.12.1)
       rubocop-performance (= 1.10.1)
-    test-unit (3.4.1)
+    test-unit (3.4.2)
       power_assert
     tilt (2.0.10)
     unf (0.1.4)
@@ -86,7 +86,7 @@ DEPENDENCIES
   rake
   sinatra (~> 2.1.0)
   standard
-  test-unit (~> 3.4.0)
+  test-unit (~> 3.4.2)
 
 BUNDLED WITH
    2.2.14
