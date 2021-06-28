@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "http", "~> 4"
+gem "http", "~> 5"
 gem "prometheus-client", "~> 2.1.0"
 gem "puma", "~> 5.2.2"
 gem "rake"
