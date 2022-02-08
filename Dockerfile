@@ -1,19 +1,17 @@
 ARG RUBY_VERSION=2.7
 
-FROM ruby:$RUBY_VERSION-alpine AS build-image
+FROM docker.io/library/ruby:$RUBY_VERSION-alpine AS build-image
 
 RUN apk update
 RUN apk add --no-cache ruby-bundler && \
     apk add --no-cache --virtual .build-deps git build-base gcc \
 	abuild binutils linux-headers gmp-dev
 
-ADD Gemfile /
+ADD Gemfile Gemfile.lock /
 RUN gem install bundler && bundle install
 
-FROM ruby:$RUBY_VERSION-alpine
+FROM docker.io/library/ruby:$RUBY_VERSION-alpine
 
-ARG SOURCE_COMMIT
-ENV SOURCE_COMMIT=$SOURCE_COMMIT
 ENV APP_HOME=/opt/moarcats
 ENV RACK_ENV=production
 ENV PORT=5000
