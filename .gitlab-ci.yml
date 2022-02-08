@@ -1,0 +1,56 @@
+---
+stages:
+  - build
+  - validate
+  - release
+
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\", \"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - >-
+      /kaniko/executor
+      --cache=true
+      --context "$CI_PROJECT_DIR"
+      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+.validate:
+  stage: validate
+  image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+test:
+  extends: .validate
+  script:
+    - bundle exec rake test
+
+standards:
+  extends: .validate
+  script:
+    - bundle exec rake standard
+  allow_failure: true
+
+release:
+  stage: release
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_TAG'
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\", \"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - >-
+      /kaniko/executor
+      --cache=true
+      --context "$CI_PROJECT_DIR"
+      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+      --destination "$CI_REGISTRY_IMAGE:latest"
