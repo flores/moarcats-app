@@ -1,6 +1,7 @@
 ---
 stages:
   - build
+  - validate
 
 build:
   stage: build
@@ -17,3 +18,18 @@ build:
       --context "$CI_PROJECT_DIR"
       --dockerfile "$CI_PROJECT_DIR/Dockerfile"
       --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+.validate:
+  stage: validate
+  image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+test:
+  extends: .validate
+  script:
+    - bundle exec rake test
+
+standards:
+  extends: .validate
+  script:
+    - bundle exec rake standard
+  allow_failure: true
