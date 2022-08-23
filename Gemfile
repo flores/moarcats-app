@@ -8,7 +8,7 @@ gem "sinatra", "~> 2.2.0"
 
 group :development, :test do
   gem "dotenv", "~> 2"
-  gem "solargraph", "~> 0.44.3", require: false
+  gem "solargraph", "~> 0.46.0", require: false
   gem "standard", "~> 1.1.5", require: false
 end
 
