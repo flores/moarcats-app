@@ -110,6 +110,7 @@ GEM
       webrick (~> 1.7.0)
 
 PLATFORMS
+  x86_64-darwin-17
   x86_64-darwin-20
   x86_64-linux
 
@@ -126,4 +127,4 @@ DEPENDENCIES
   test-unit (~> 3.4.4)
 
 BUNDLED WITH
-   2.2.14
+   2.3.20

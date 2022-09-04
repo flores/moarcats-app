@@ -8,7 +8,7 @@ RUN apk add --no-cache ruby-bundler && \
 	abuild binutils linux-headers gmp-dev
 
 ADD Gemfile Gemfile.lock /
-RUN gem install bundler && bundle install
+RUN gem install -v 2.3.20 bundler && bundle install
 
 FROM docker.io/library/ruby:$RUBY_VERSION-alpine
 
