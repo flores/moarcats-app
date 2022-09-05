@@ -41,7 +41,7 @@ GEM
     parallel (1.20.1)
     parser (3.0.2.0)
       ast (~> 2.4.1)
-    power_assert (2.0.0)
+    power_assert (2.0.1)
     prometheus-client (2.1.0)
     public_suffix (4.0.6)
     puma (5.6.4)
@@ -97,7 +97,7 @@ GEM
     standard (1.1.5)
       rubocop (= 1.18.3)
       rubocop-performance (= 1.11.4)
-    test-unit (3.4.4)
+    test-unit (3.5.3)
       power_assert
     thor (1.2.1)
     tilt (2.0.10)
@@ -124,7 +124,7 @@ DEPENDENCIES
   sinatra (~> 2.2.0)
   solargraph (~> 0.44.3)
   standard (~> 1.1.5)
-  test-unit (~> 3.4.4)
+  test-unit (~> 3.5.3)
 
 BUNDLED WITH
    2.3.20
