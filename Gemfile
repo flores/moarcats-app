@@ -14,5 +14,5 @@ end
 
 group :test do
   gem "rack-test", "~> 1.1.0"
-  gem "test-unit", "~> 3.4.4"
+  gem "test-unit", "~> 3.5.7"
 end
