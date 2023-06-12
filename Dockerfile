@@ -1,16 +1,15 @@
-ARG RUBY_VERSION=2.7
+ARG RUBY_VERSION=3.1
 
-FROM docker.io/library/ruby:$RUBY_VERSION-alpine AS build-image
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim-buster AS build-image
 
-RUN apk update
-RUN apk add --no-cache ruby-bundler && \
-    apk add --no-cache --virtual .build-deps git build-base gcc \
-	abuild binutils linux-headers gmp-dev
+RUN set -eux;\
+  apt-get update; \
+  apt-get install -y build-essential
 
 ADD Gemfile Gemfile.lock /
 RUN gem install -v 2.3.20 bundler && bundle install
 
-FROM docker.io/library/ruby:$RUBY_VERSION-alpine
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim-buster
 
 ENV APP_HOME=/opt/moarcats
 ENV RACK_ENV=production
