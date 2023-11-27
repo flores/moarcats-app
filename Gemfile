@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "http", "~> 5"
 gem "prometheus-client", "~> 2.1.0"
-gem "puma", "~> 5.6.1"
+gem "puma", "~> 6.3.1"
 gem "rake"
 gem "sinatra", "~> 3.0.5"
 
