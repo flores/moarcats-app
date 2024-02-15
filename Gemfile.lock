@@ -9,7 +9,7 @@ GEM
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.7.6)
+    dotenv (3.0.1)
     e2mmap (0.1.0)
     ffi (1.15.3)
     ffi-compiler (1.0.1)
@@ -115,7 +115,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  dotenv (~> 2)
+  dotenv (~> 3)
   http (~> 5)
   prometheus-client (~> 2.1.0)
   puma (~> 6.3.1)
