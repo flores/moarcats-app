@@ -47,7 +47,7 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (2.2.7)
+    rack (2.2.9)
     rack-protection (3.0.5)
       rack
     rack-test (1.1.0)
