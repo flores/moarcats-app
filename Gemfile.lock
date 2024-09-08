@@ -34,6 +34,8 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.0)
+    nokogiri (1.16.3-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.3-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.3-x86_64-linux)
@@ -42,7 +44,6 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     power_assert (2.0.2)
-    prometheus-client (2.1.0)
     public_suffix (4.0.6)
     puma (6.4.2)
       nio4r (~> 2.0)
@@ -108,6 +109,7 @@ GEM
     yard (0.9.36)
 
 PLATFORMS
+  arm64-darwin-22
   x86_64-darwin-17
   x86_64-darwin-20
   x86_64-linux
@@ -115,7 +117,6 @@ PLATFORMS
 DEPENDENCIES
   dotenv (~> 2)
   http (~> 5)
-  prometheus-client (~> 2.1.0)
   puma (~> 6.4.2)
   rack-test (~> 1.1.0)
   rake
