@@ -1,5 +1,4 @@
-ARG RUBY_VERSION=3.1
-
+ARG RUBY_VERSION=3.4
 FROM docker.io/library/ruby:${RUBY_VERSION}-slim-buster AS build-image
 
 RUN set -eux;\
@@ -7,7 +6,7 @@ RUN set -eux;\
   apt-get install -y build-essential
 
 ADD Gemfile Gemfile.lock /
-RUN gem install -v 2.3.20 bundler && bundle install
+RUN gem install -v 2.6.2 bundler && bundle install
 
 FROM docker.io/library/ruby:${RUBY_VERSION}-slim-buster
 
