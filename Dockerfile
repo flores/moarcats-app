@@ -1,5 +1,5 @@
 ARG RUBY_VERSION=3.4
-FROM docker.io/library/ruby:${RUBY_VERSION}-slim-buster AS build-image
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim-bookworm AS build-image
 
 RUN set -eux;\
   apt-get update; \
@@ -8,7 +8,7 @@ RUN set -eux;\
 ADD Gemfile Gemfile.lock /
 RUN gem install -v 2.6.2 bundler && bundle install
 
-FROM docker.io/library/ruby:${RUBY_VERSION}-slim-buster
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim-bookworm
 
 ENV APP_HOME=/opt/moarcats
 ENV RACK_ENV=production
