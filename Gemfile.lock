@@ -133,7 +133,7 @@ GEM
     standard-performance (1.8.0)
       lint_roller (~> 1.1)
       rubocop-performance (~> 1.25.0)
-    test-unit (3.5.9)
+    test-unit (3.7.0)
       power_assert
     thor (1.4.0)
     tilt (2.6.1)
@@ -159,7 +159,7 @@ DEPENDENCIES
   sinatra (~> 4.1.1)
   solargraph (~> 0.56.2)
   standard (~> 1.51.1)
-  test-unit (~> 3.5.7)
+  test-unit (~> 3.7.0)
 
 BUNDLED WITH
    2.6.9
