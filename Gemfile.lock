@@ -70,7 +70,7 @@ GEM
     regexp_parser (2.10.0)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.4.1)
+    rexml (3.4.2)
     rubocop (1.64.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
