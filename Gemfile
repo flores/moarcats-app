@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "http", "~> 5"
 gem "puma", "~> 7.0.4"
 gem "rake"
-gem "sinatra", "~> 4.1.1"
+gem "sinatra", "~> 4.2.0"
 
 group :development, :test do
   gem "solargraph", "~> 0.56.2", require: false
