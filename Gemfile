@@ -7,7 +7,7 @@ gem "sinatra", "~> 4.2.1"
 
 group :development, :test do
   gem "solargraph", "~> 0.56.2", require: false
-  gem "standard", "~> 1.51.1", require: false
+  gem "standard", "~> 1.53.0", require: false
 end
 
 group :test do
