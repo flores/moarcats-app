@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "http", "~> 5"
-gem "puma", "~> 7.1.0"
+gem "puma", "~> 7.2.0"
 gem "rake"
 gem "sinatra", "~> 4.2.1"
 
